@@ -1,0 +1,81 @@
+<% include header.html %>
+<p><%= content %></p>
+<!--注册-->
+<h2>注册</h2>
+<form method="post" id="signup" action="/signup">
+   <p>nickname</p>
+   <input type="text" name="nickname" id="nickname" value=""/>
+   <p>password</p>
+   <input type="password" name="password" id="password" value=""/>
+   <p>device_token</p>
+   <input type="device_token" name="device_token" id="device_token" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--登录-->
+<h2>登录</h2>
+<form method="post" id="signup" action="/login">
+   <p>nickname</p>
+   <input type="text" name="nickname" id="nickname" value=""/>
+   <p>password</p>
+   <input type="password" name="password" id="password" value=""/>
+   <p>device_token</p>
+   <input type="device_token" name="device_token" id="device_token" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--添加朋友关系-->
+<h2>添加朋友关系</h2>
+<form method="post" id="signup" action="/add_friend">
+   <p>主动添加方nickname</p>
+   <input type="text" name="nickname_host" id="nickname_host" value=""/>
+   <p>被动方nickname</p>
+   <input type="text" name="nickname_guest" id="nickname_guest" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--拉取朋友列表-->
+<h2>拉取朋友列表</h2>
+<form method="post" id="signup" action="/friends_list">
+   <p>nickname</p>
+   <input type="text" name="nickname" id="nickname" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--发送消息-->
+<h2>发送消息</h2>
+<form method="post" id="signup" action="/send_message">
+   <p>发送方nickname</p>
+   <input type="text" name="from" id="from" value=""/>
+   <p>接收方nickname</p>
+   <input type="text" name="to" id="to" value=""/>
+   <p>消息内容</p>
+   <input type="text" name="content" id="content" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--更新token-->
+<h2>更新token</h2>
+<form method="post" id="signup" action="/update_token">
+   <p>nickname</p>
+   <input type="text" name="nickname" id="nickname" value=""/>
+   <p>new token</p>
+   <input type="text" name="device_token" id="device_token" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+
+<% include footer.html %>
+
