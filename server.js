@@ -65,8 +65,8 @@ app.post('/add_friend', routes.add_friend);
 app.post('/friends_list', routes.friends_list);
 app.post('/send_message', routes.send_message);
 app.post('/update_token', routes.update_token);
-/*
 app.post('/logout', routes.logout);
+/*
 app.post('/send_message', routes.sendMessage);
 app.post('/get_message', routes.getMessage);
 app.post('/send_email', routes.collectEmailAddress);

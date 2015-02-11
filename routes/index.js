@@ -10,6 +10,9 @@
 var addUsers = require('./../models/users.js');
 var addMessages = require('./../models/messages.js');
 
+// 模块
+var apns = require('./apns.js');
+
 exports.index = function(req, res){
    res.render('index', {
      content: '［接口调试］',
@@ -80,18 +83,28 @@ exports.login = function(req, res){
 	addUsers.findOne({nickname: req.body.nickname}, function(err, doc){
 		if (err) {console.log('【error】' + err);}
 		if (doc) {
-         if (req.body.password == doc.password) {
-         	// 密码正确
-         	json.data = doc;
-         	console.log(json);
-         	res.send(json);
-         } else {
-         	// 密码错误
-         	json.status = 'unavailable';
-         	json.errcode = 130;
-            console.log(json);
-            res.send(json);
-         }
+            if (req.body.password == doc.password) {
+             	// 密码正确
+                addUsers.update(
+                    {nickname: req.body.nickname},  //查询项
+                    {device: {ios_token: req.body.device_token}},  //修改项
+                    {safe: true, multi: true},  //设置项
+                    function(err, num){
+                        if (err) {
+                            console.log('[error]:' + err);
+                        }
+                        console.log('【update device token】: ' + num);
+                        json.data = req.body;
+                        console.log(json);
+                        res.send(json);
+                });
+            } else {
+            	// 密码错误
+            	json.status = 'unavailable';
+            	json.errcode = 130;
+                console.log(json);
+                res.send(json);
+            }
 		} else {
 			// 该用户未注册
 			json.status = 'unavailable';
@@ -100,6 +113,44 @@ exports.login = function(req, res){
 			res.send(json);
 		}
 	});
+};
+
+
+
+
+/*
+ * 退出登录
+ *
+ *
+ */
+exports.logout = function(req, res){
+   console.log('【退出登录】');
+   console.log(req.body);
+   
+   // 构建json返回值
+   var json = {};
+   json.status = 'available'; // 默认status是可用状态
+   json.errcode = 110;
+   json.data = {};
+
+   addUsers.update(
+      {nickname: req.body.nickname},  //查询项
+      {device: {ios_token: 'no device token'}},  //修改项
+      {safe: true},  //设置项
+      function(err, num){
+         if (err) {console.log('【error】' + err);}
+         if (num == 0) {
+            console.log('ios token update: ' + num);
+            json.status = 'unavailable';
+            json.errcode = 210;
+            console.log(json);
+            res.send(json);
+         } else if (num > 0){
+            console.log('ios token update: ' + num);
+            console.log(json);
+            res.send(json);
+         }
+   });
 };
 
 
@@ -284,9 +335,30 @@ exports.send_message = function(req, res){
    json.errcode = 110;
    json.data = {};
    
-   // 
-   json.data = req.body;
-   res.send(json);
+   addUsers.findOne({nickname: req.body.to}, function(err, doc){
+      if (err) {console.log('【error】' + err);}
+      if (doc) {
+         // 启动苹果推送
+         console.log('[token]:' + doc.device.ios_token);
+         if (doc.device.ios_token == 'no device token') {
+            console.log('The user has no token');
+            json.status = 'unavailable';
+            json.errcode = 190;
+            res.send(json);
+         } else {
+            if (doc.device.ios_token) {
+               apns.apns(doc.device.ios_token, req.body.message, req.body.from);
+            }
+         }
+         // 消息返回值
+         json.data = req.body;
+         res.send(json);
+      } else {
+         json.status = 'unavailable';
+         json.errcode = 180;
+         res.send(json);
+      }
+   });
 };
 
 

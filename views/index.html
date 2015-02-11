@@ -58,7 +58,7 @@
    <p>接收方nickname</p>
    <input type="text" name="to" id="to" value=""/>
    <p>消息内容</p>
-   <input type="text" name="content" id="content" value=""/>
+   <input type="text" name="message" id="message" value=""/>
    <button id="submit">send</button>
 </form>
 </div>
@@ -71,6 +71,16 @@
    <input type="text" name="nickname" id="nickname" value=""/>
    <p>new token</p>
    <input type="text" name="device_token" id="device_token" value=""/>
+   <button id="submit">send</button>
+</form>
+</div>
+<hr/>
+
+<!--退出登录-->
+<h2>退出登录</h2>
+<form method="post" id="signup" action="/logout">
+   <p>nickname</p>
+   <input type="text" name="nickname" id="nickname" value=""/>
    <button id="submit">send</button>
 </form>
 </div>

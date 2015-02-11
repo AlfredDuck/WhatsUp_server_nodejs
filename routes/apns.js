@@ -10,7 +10,7 @@ var options = {
     //key:  'key.pem',
     cert: './routes/cert.pem',                             /* Certificate file path */
     key:  './routes/key.pem',                              /* Key file path */
-    gateway: 'gateway.push.apple.com',    /* gateway address */
+    gateway: 'gateway.sandbox.push.apple.com',    /* gateway address */
     port: 2195,                                   /* gateway port */
     errorCallback: errorHappened ,                /* Callback when error occurs function(err,notification) */
 }; 
@@ -21,22 +21,52 @@ function errorHappened(err, notification){
 
 var apnsConnection = new apns.Connection(options);
 
-function startSend(deviceToken, text){
+function startSend(deviceToken, message, from){
    var token = deviceToken;
    var myDevice = new apns.Device(token);
+
    var note = new apns.Notification();
    note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
-   note.badge = 1;  // 程序图标的小红点数量
-   note.sound = "sleep.m4a";
-   note.alert = text;
-   note.payload = {'messageFrom': 'Silent'};
+   note.badge = 0;  // 程序图标的小红点数量
+   note.sound = soundSelect(message);
+   note.alert = from + ': ' + message;
+   note.payload = {'messageFrom': 'WhatsUP'};
    note.device = myDevice;
 
    apnsConnection.sendNotification(note);
+   console.log('once send');
+}
+
+// 1.0版本
+function soundSelect(message){
+   var sound = 'ping.mp3';
+   switch (message) {
+      case '★吃饭啦★':
+         sound = 'dinner_tom.m4a';
+         break;
+      case '★快起床★':
+         sound = 'wake_up_tom.m4a';
+         break;
+      case '★睡觉啦★':
+         sound = 'sleep_tom.m4a';
+         break;
+      case '★懒得理你★':
+         sound = 'lan_de_li_ni_tom.m4a';
+         break;
+      case '★下雨收衣服啦★':
+         sound = 'rains_to_get_cloth_tom.m4a';
+         break;
+      case '★嗯哼★':
+         sound = 'en_heng_tom.m4a';
+         break;
+      default:
+         sound = 'ping.mp3';
+   }
+   return sound;
 }
 
 
-exports.apns = function(token, message){
+exports.apns = function(token, message, from){
    console.log('[send to apns]');
    //var deviceToken = "3a4925d81ec6ab9065a9e5c26f9b75257d6a4f3e24bb00b42c3be6d766840373";
    // 对message长度做限制，控制在134个字符以内
@@ -46,7 +76,7 @@ exports.apns = function(token, message){
    } else {
       messageForAPNs = message.substr(0, 130) + '...';
    }
-   startSend(token, messageForAPNs);
+   startSend(token, messageForAPNs, from);
 };
 
 //main();
