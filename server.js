@@ -28,7 +28,7 @@ var store = new SessionStore({
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 18080);
+app.set('port', process.env.PORT || 8000);
 app.set('views', __dirname + '/views');
 app.engine('.html',ejs.__express);
 app.set('view engine', 'html');
@@ -78,14 +78,15 @@ app.get('/data_message', data.message);
 
 
 //端口监听
+/*
 if (!module.parent){
   http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
   });
 }
 module.exports = app;
-/*
+*/
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-*/
+

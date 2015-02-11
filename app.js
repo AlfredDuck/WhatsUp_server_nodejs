@@ -13,7 +13,7 @@ if (cluster.isMaster){
   });
   //first start worker,as same as the CPU num
   //for (var i=0; i<numCPUs; i++){   控制使用的CPU数量，因为bae提供的CPU核数很多，占用太多内存
-  for (var i=0; i<4; i++){
+  for (var i=0; i<1; i++){
     var worker = cluster.fork();
     workers[worker.pid] = worker;
   }
