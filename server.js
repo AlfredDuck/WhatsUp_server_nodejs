@@ -72,7 +72,7 @@ app.post('/get_message', routes.getMessage);
 app.post('/send_email', routes.collectEmailAddress);
 */
 //数据查询（通过网页）
-//app.get('/data_clear', data.clear);
+app.get('/data_clear', data.clear);
 app.get('/data_signup', data.signup_user);
 app.get('/data_message', data.message);
 

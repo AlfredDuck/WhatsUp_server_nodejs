@@ -8,9 +8,9 @@ var options = {
     /*本来下面是可以写同路径的，但是因为当前模块是被引用的，所以要写引用者的路径*/
     //cert: 'cert.pem',
     //key:  'key.pem',
-    cert: './routes/cert.pem',                             /* Certificate file path */
-    key:  './routes/key.pem',                              /* Key file path */
-    gateway: 'gateway.sandbox.push.apple.com',    /* gateway address */
+    cert: './routes/cert_pro.pem',                             /* Certificate file path */
+    key:  './routes/key_pro.pem',                              /* Key file path */
+    gateway: 'gateway.push.apple.com',    /* gateway address */
     port: 2195,                                   /* gateway port */
     errorCallback: errorHappened ,                /* Callback when error occurs function(err,notification) */
 }; 
