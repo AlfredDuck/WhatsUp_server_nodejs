@@ -59,6 +59,18 @@ function soundSelect(message){
       case '★嗯哼★':
          sound = 'en_heng_tom.m4a';
          break;
+      case '★你是逗逼吗★':
+         sound = 'are_you_doubi_tom.m4a';
+         break;
+      case '★hi★':
+         sound = 'hi_tom.m4a';
+         break;
+      case '★不开心★':
+         sound = 'unhappy_tom.m4a';
+         break;
+      case '★呵呵★':
+         sound = 'hehe_tom.m4a';
+         break;
       default:
          sound = 'ping.mp3';
    }

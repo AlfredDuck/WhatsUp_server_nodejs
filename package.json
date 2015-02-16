@@ -2,7 +2,7 @@
     "name": "bae-nodejs",
     "version": "1.0.0",
     "author": "bae",
-    "description": "Zufang",
+    "description": "WhatsUp",
     "scripts": {
         "start": "node app.js"
     },
